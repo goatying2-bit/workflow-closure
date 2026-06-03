@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>workflow-closure ops panel</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="page-header">
+        <div>
+          <h1>workflow-closure ops panel</h1>
+          <p>观察并操作 agents、assignments、handoffs 和 blocked work。</p>
+        </div>
+        <div class="toolbar">
+          <button id="refresh-button" type="button">Refresh</button>
+          <button id="assign-button" type="button">Assign next</button>
+          <button id="run-button" type="button">Run next</button>
+          <label class="inline-field" for="auto-refresh-select">
+            <span>Auto refresh</span>
+            <select id="auto-refresh-select">
+              <option value="0">Off</option>
+              <option value="5000">5s</option>
+              <option value="15000">15s</option>
+              <option value="30000">30s</option>
+            </select>
+          </label>
+        </div>
+      </header>
+
+      <section id="status-bar" class="status-bar">Loading...</section>
+
+      <section class="filter-bar panel">
+        <div class="panel-title-row">
+          <h2>Filters</h2>
+          <div class="filter-actions">
+            <button id="apply-filters-button" type="button">Apply</button>
+            <button id="clear-filters-button" type="button">Clear</button>
+          </div>
+        </div>
+        <div class="filter-grid">
+          <label class="field">
+            <span class="field-label">Workflow ID</span>
+            <input id="workflow-id-filter" type="text" placeholder="Filter by workflowId" />
+          </label>
+          <label class="field">
+            <span class="field-label">Chain ID</span>
+            <input id="chain-id-filter" type="text" placeholder="Filter by chainId" />
+          </label>
+          <label class="checkbox-field">
+            <input id="blocked-only-filter" type="checkbox" />
+            <span>Blocked assignments only</span>
+          </label>
+          <label class="checkbox-field">
+            <input id="include-test-data-filter" type="checkbox" />
+            <span>Show test/debug/archived data</span>
+          </label>
+          <label class="checkbox-field">
+            <input id="include-history-filter" type="checkbox" />
+            <span>Show history/audit rows</span>
+          </label>
+        </div>
+      </section>
+
+      <section class="overview-grid" id="overview-grid"></section>
+
+      <section class="panel-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Agents</h2>
+            <span id="agents-count"></span>
+          </div>
+          <div id="agents-list" class="list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header panel-header-stack">
+            <div class="panel-title-row">
+              <h2>Assignments</h2>
+              <span id="assignments-count"></span>
+            </div>
+            <div class="assignment-actions">
+              <button id="resume-button" type="button">Resume</button>
+              <select id="reassign-agent-select" aria-label="Select reassign target agent">
+                <option value="">Select target agent</option>
+              </select>
+              <button id="reassign-button" type="button">Reassign</button>
+            </div>
+          </div>
+          <div id="assignments-list" class="list"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2>Handoffs</h2>
+            <span id="handoffs-count"></span>
+          </div>
+          <div id="handoffs-list" class="list"></div>
+        </section>
+      </section>
+
+      <aside class="details-panel">
+        <div class="panel-header panel-header-stack">
+          <div class="panel-title-row">
+            <h2>Details</h2>
+            <span id="selection-label">Nothing selected</span>
+          </div>
+          <div class="details-toolbar">
+            <div id="details-meta" class="details-meta">Select an agent, assignment, or handoff.</div>
+            <label class="checkbox-field compact">
+              <input id="raw-details-toggle" type="checkbox" />
+              <span>Raw JSON</span>
+            </label>
+          </div>
+        </div>
+        <div id="details-summary" class="details-summary">Select an agent, assignment, or handoff.</div>
+        <pre id="details-output" class="details-output hidden">Select an agent, assignment, or handoff.</pre>
+      </aside>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

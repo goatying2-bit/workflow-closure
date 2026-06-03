@@ -1,0 +1,46 @@
+name: workflow-closure-smoke
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'index.js'
+      - 'cli.js'
+      - 'core/**'
+      - 'runner/**'
+      - 'storage/**'
+      - 'scripts/**'
+      - '.github/workflows/workflow-closure-smoke.yml'
+  pull_request:
+    paths:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'index.js'
+      - 'cli.js'
+      - 'core/**'
+      - 'runner/**'
+      - 'storage/**'
+      - 'scripts/**'
+      - '.github/workflows/workflow-closure-smoke.yml'
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run full smoke suite
+        run: npm run full-smoke-test
